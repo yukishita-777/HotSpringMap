@@ -1,15 +1,46 @@
-version: 2.1
-orbs:
-  heroku: circleci/heroku@0.0.8
-workflows:
-  heroku_deploy:
-    jobs:
-      - deploy
+version: 2
 jobs:
-  deploy:
-    executor: heroku/default # Uses the basic buildpack-deps image, which has the prerequisites for installing heroku's CLI.
-    steps:
-      - checkout
-      - heroku/install # Runs the heroku install command, if necessary.
-      - heroku/deploy-via-git: # Deploys branch to Heroku via git push.
-          only-branch: master # If you specify an only-branch, the deploy will not occur for any other branch.
+   build:
+      docker:
+        - image: circleci/ruby:2.6.6-node
+          environment:
+            #自身の登録しているユーザに変える。
+            POSTGRES_USER: postgres 
+            PGHOST: 127.0.0.1
+            RAILS_ENV: test
+        - image: circleci/postgres:9.6
+          environment:
+            POSTGRES_USER: postgres
+            POSTGRES_HOST_AUTH_METHOD: trust
+            POSTGRES_DB: portfolio_test
+            
+      working_directory: ~/HotSpringMap
+      steps:
+        - checkout
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "Gemfile.lock" }}
+              - v1-dependencies-
+        - run:
+            name: install dependencies
+            command: |
+              gem install bundler -v 2.1.4
+              bundle install --jobs=4 --retry=3 --path vendor/bundle
+        - save_cache:
+            key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+            paths:
+              - ./vendor/bundle
+
+        - run:
+            name: DBの起動を待つ
+            command: dockerize -wait tcp://127.0.0.1:5432 -timeout 120s
+
+        - run: bundle exec rake db:create
+        - run: bundle exec rake db:schema:load
+
+        - run:
+            name: rspec
+            command: bundle exec rspec
+        - run:
+            name: rubocop
+            command: bundle exec rubocop
