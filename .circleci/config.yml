@@ -12,8 +12,8 @@ jobs:
           environment:
             POSTGRES_USER: postgres
             POSTGRES_HOST_AUTH_METHOD: trust
-            POSTGRES_DB: portfolio_test
-            
+            POSTGRES_DB: HotSpringMap_test
+
       working_directory: ~/HotSpringMap
       steps:
         - checkout
