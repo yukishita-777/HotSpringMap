@@ -6,7 +6,7 @@ jobs:
           environment:
             #自身の登録しているユーザに変える。
             POSTGRES_USER: postgres 
-            PGHOST: 127.0.0.1
+            PGHOST: db
             RAILS_ENV: test
         - image: circleci/postgres
           environment:
