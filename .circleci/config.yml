@@ -36,7 +36,7 @@ jobs:
         - run:
             name: Prepare db
             command: |
-              bundle exec rake db:create db:schema:load --trace
+              bundle exec rake db:create bundle exec rake db:structure:load
 
         - run:
             name: rspec
