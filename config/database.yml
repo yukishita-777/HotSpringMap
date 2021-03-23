@@ -83,6 +83,6 @@ test:
 #
 production:
   <<: *default
-  database: HotSpringMap_production
-  username: HotSpringMap
-  password: <%= ENV['HOTSPRINGMAP_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
