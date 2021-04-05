@@ -1,0 +1,15 @@
+<h2>温泉マップ</h2>
+
+<div id="target"></div>
+<input type="text" id="keyword">
+<button id="search">Search</button>
+<script>
+  let map;
+
+  function initMap() {
+    map = new google.maps.Map(document.getElementById("target"), {
+      center: { lat: -34.397, lng: 150.644 },
+      zoom: 8,
+    });
+  }
+</script>
