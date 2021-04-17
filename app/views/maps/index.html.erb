@@ -1,15 +1,61 @@
-<h2>温泉マップ</h2>
-
-<div id="target"></div>
-<input type="text" id="keyword">
-<button id="search">Search</button>
+<div class="container-fluid">
+  <div class="row">
+    <%= render "shared/sidebar" %>
+    <div id="target" class="col-md-9"></div>
+  </div>
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=<%="#{ENV['API_KEY']}"%>&callback=initMap&libraries=places" async defer></script>
 <script>
-  let map;
 
   function initMap() {
-    map = new google.maps.Map(document.getElementById("target"), {
-      center: { lat: -34.397, lng: 150.644 },
-      zoom: 8,
+    'use strict';
+    let map;
+    var target = document.getElementById("target")
+    var geocoder = new google.maps.Geocoder();
+    const search = document.getElementById("search")
+    var tokyo = {lat: 35.681167, lng: 139.767052}
+
+    const spa_search = document.getElementById("spa_search")
+    const keyword = document.getElementById("keyword")
+    const request = {
+      query: keyword,
+      fields: ['name', 'geometry'],
+    };
+    var service = new google.maps.places.PlacesService(map);
+
+    map = new google.maps.Map(target, {
+            center: tokyo,
+            zoom: 15
+          });
+
+    search.addEventListener('click', function(){
+      geocoder.geocode({
+        address: document.getElementById('address').value
+      }, function(results, status) {
+        if (status !== 'OK') {
+          alert('該当する場所がございません。')
+          return;
+        }
+        if (results[0]) {
+          new google.maps.Map(target, {
+            center: results[0].geometry.location,
+            zoom: 15
+          });
+        } else {
+          alert('該当する場所がございません。')
+          return;
+        }
+      });
+    });
+    
+    spa_search.addEventListener('click', function(){
+      service.findPlaceFromQuery(request, function(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          for (var i = 0; i < results.length; i++) {
+            createMarker(results[i]);
+          }
+        }
+      });
     });
   }
 </script>
