@@ -1,14 +1,15 @@
 {
-  "application.js": "/packs/js/application-9bd30651149e478bc04c.js",
-  "application.js.map": "/packs/js/application-9bd30651149e478bc04c.js.map",
+  "application.js": "/packs/js/application-95bb7981ef37f16d3fac.js",
+  "application.js.map": "/packs/js/application-95bb7981ef37f16d3fac.js.map",
   "entrypoints": {
     "application": {
       "js": [
-        "/packs/js/application-9bd30651149e478bc04c.js"
+        "/packs/js/application-95bb7981ef37f16d3fac.js"
       ],
       "js.map": [
-        "/packs/js/application-9bd30651149e478bc04c.js.map"
+        "/packs/js/application-95bb7981ef37f16d3fac.js.map"
       ]
     }
-  }
+  },
+  "media/images/onsen.png": "/packs/media/images/onsen-dd3edcf2e75f2ec0084c408eff23f99c.png"
 }
