@@ -81,23 +81,34 @@
       if(status == google.maps.places.PlacesServiceStatus.OK){
         for(var i = 0; i < results.length;i++) {
           var location = results[i].geometry.location;
-          var name = results[i].name;
+          var name = results[i].name
+          var geocoder = new google.maps.Geocoder();
 
-          const infowindow = new google.maps.InfoWindow({
-            content: name
-          });
-          const marker = new google.maps.Marker({
-            position: location,
-            map,
-            title: name,
-            icon: {
-              url: "<%= asset_pack_path 'media/images/onsen.png' %>",
-              scaledSize: new google.maps.Size(40, 40)
-            },
+          geocoder.geocode({
+            location: location
+          }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              var adds = results[0].formatted_address.replace("日本、", "");
+              
+              const infowindow = new google.maps.InfoWindow({
+                content: '<div>'+ name + '</div>' + 
+                          '<div>'+ adds + '</div>'
+              });
 
-          });
-          marker.addListener("click", () => {
-            infowindow.open(map, marker);
+              const marker = new google.maps.Marker({
+                position: location,
+                map,
+                title: name,
+                icon: {
+                  url: "<%= asset_pack_path 'media/images/onsen.png' %>",
+                  scaledSize: new google.maps.Size(40, 40)
+                },
+              });
+
+              marker.addListener("click", () => {
+                infowindow.open(map, marker);
+              });
+            }
           });
         }
       }
