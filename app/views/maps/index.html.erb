@@ -20,6 +20,9 @@
       zoom: 15
     });
 
+    searchOnsen();
+    dragMarker();
+
     cl.addEventListener('click', function(){
       if (!navigator.geolocation) {
         alert('Geolocation not supported');
@@ -40,6 +43,8 @@
       },function() {
           alert('位置情報取得に失敗しました');
       });
+      searchOnsen();
+      dragMarker();
     });
 
     search.addEventListener('click', function(){
@@ -63,8 +68,6 @@
         dragMarker();
       });
     });
-    searchOnsen();
-    dragMarker();
   }
 
   function searchOnsen(){
@@ -139,5 +142,4 @@
     parent.appendChild(br);
 
   }
-
 </script>
