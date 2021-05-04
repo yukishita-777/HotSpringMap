@@ -82,22 +82,35 @@
         for(var i = 0; i < results.length;i++) {
           var location = results[i].geometry.location;
           var name = results[i].name;
+          var geocoder = new google.maps.Geocoder();
 
-          const infowindow = new google.maps.InfoWindow({
-            content: name
-          });
-          const marker = new google.maps.Marker({
-            position: location,
-            map,
-            title: name,
-            icon: {
-              url: "<%= asset_pack_path 'media/images/onsen.png' %>",
-              scaledSize: new google.maps.Size(40, 40)
-            },
+          geocoder.geocode({
+            location: location
+          }, function(results, status) {
+            var adds = results[0].formatted_address.replace("日本、", "");
 
-          });
-          marker.addListener("click", () => {
-            infowindow.open(map, marker);
+            const infowindow = new google.maps.InfoWindow({
+                content: '<div id="content_name">'+ name + '</div>' + 
+                          '<div>'+ adds + '</div>' +
+                          '<button id="keep">キープ</button>'
+            });
+            const marker = new google.maps.Marker({
+              position: location,
+              map,
+              title: name,
+              icon: {
+                url: "<%= asset_pack_path 'media/images/onsen.png' %>",
+                scaledSize: new google.maps.Size(40, 40)
+              },
+            });
+            marker.addListener("click", () => {
+              infowindow.open(map, marker);
+            });
+            infowindow.addListener('domready', ()=> {
+              document.getElementById('keep').addEventListener('click', ()=>{
+                addElement();
+              });
+            });
           });
         }
       }
@@ -107,4 +120,24 @@
   function dragMarker(){
     google.maps.event.addListener(map, "drag", searchOnsen);
   }
+
+  function addElement() {
+    var br = document.createElement("br")
+    var content_name = document.getElementById('content_name').innerText
+
+    var element = document.createElement("label");
+    element.classList.add("btn");
+    element.innerText = "・" + content_name;
+
+    var element2 = document.createElement("label");
+    element2.classList.add("btn");
+    element2.innerText = "☆";
+
+    var parent = document.getElementById('parent');
+    parent.appendChild(element);
+    parent.appendChild(element2);
+    parent.appendChild(br);
+
+  }
+
 </script>
