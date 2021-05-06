@@ -7,6 +7,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=<%="#{ENV['API_KEY']}"%>&callback=initMap&libraries=places" async defer></script>
 <script>
   var map;
+  var count = 0;
   function initMap() {
     'use strict';
     var target = document.getElementById("target")
@@ -14,6 +15,7 @@
     const search = document.getElementById("search")
     var tokyo = {lat: 35.681167, lng: 139.767052}
     var cl = document.getElementById('cl')
+    var reset = document.getElementById('reset')
 
     map = new google.maps.Map(target, {
       center: tokyo,
@@ -43,8 +45,6 @@
       },function() {
           alert('位置情報取得に失敗しました');
       });
-      searchOnsen();
-      dragMarker();
     });
 
     search.addEventListener('click', function(){
@@ -68,6 +68,21 @@
         dragMarker();
       });
     });
+
+    reset.addEventListener('click', () => {
+      var parent = document.getElementById('parent');
+
+        if (parent.hasChildNodes()) {
+          while(parent.firstChild){
+            parent.removeChild(parent.firstChild);
+          }
+          count = 0;
+        } else {
+          alert("リストがございません。");
+        }
+    });
+
+
   }
 
   function searchOnsen(){
@@ -125,21 +140,24 @@
   }
 
   function addElement() {
-    var br = document.createElement("br")
-    var content_name = document.getElementById('content_name').innerText
-
-    var element = document.createElement("label");
-    element.classList.add("btn");
-    element.innerText = "・" + content_name;
-
-    var element2 = document.createElement("label");
-    element2.classList.add("btn");
-    element2.innerText = "☆";
-
-    var parent = document.getElementById('parent');
-    parent.appendChild(element);
-    parent.appendChild(element2);
-    parent.appendChild(br);
-
+    if (count <= 4) {
+      var content_name = document.getElementById('content_name').innerText
+      var br = document.createElement("br")
+      br.setAttribute('id', 'br_list');
+  
+      var element = document.createElement("label");
+      element.classList.add("btn");
+      element.setAttribute('id', 'keep_list');
+      element.innerText = "・" + content_name;
+  
+      var parent = document.getElementById('parent');
+      parent.appendChild(element);
+      parent.appendChild(br);
+      count += 1
+    } else {
+      alert("最大５つまでです。")
+    }
   }
+
+
 </script>
