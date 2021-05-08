@@ -1,5 +1,20 @@
 <nav class="sticky-top navbar navbar-expand-lg navbar-success bg-success">
     <a class="navbar-brand text-dark" href="/">温泉マップ</a>
+    <div id="open" class="btn">
+      <span class="material-icons md-36 md-light">not_listed_location</span>
+    </div>
+    <div id="mask" class="hidden"></div>
+    <section id="modal" class="hidden">
+      <h2>このサイトについて</h2>
+      <p>温泉マップは周辺の温泉、銭湯を表示するサービスです。</p>
+      <p>地名・エリアから探すもしくは現在地周辺から探すことが可能です。</p>
+      <p>探したい場所を表示させたら、スクロールやドラッグ等で周辺の温泉をお探しください。</p>
+      <p>登録無しでもキープ(5件まで)可能ですが、温泉のお気に入り登録はユーザー登録が必要です。</p>
+      
+      <p>※テスト用にユーザーを用意致しました。ログイン画面に記載がございますので、是非ご活用ください。</p>
+    
+      <div id="close" class="btn btn-primary">閉じる</div>
+    </section>
     <div class="input-group">
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control" type="text" id="address" placeholder="地名・エリアから探す">
