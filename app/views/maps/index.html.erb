@@ -110,7 +110,7 @@
             const infowindow = new google.maps.InfoWindow({
                 content: '<div id="content_name">'+ name + '</div>' + 
                           '<div>'+ adds + '</div>' +
-                          '<button id="keep">キープ</button>'
+                          '<button id="keep" class="btn btn-primary btn-sm btn-block">キープ</button>'
             });
             const marker = new google.maps.Marker({
               position: location,
@@ -158,6 +158,4 @@
       alert("最大５つまでです。")
     }
   }
-
-
 </script>

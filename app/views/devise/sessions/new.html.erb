@@ -1,0 +1,30 @@
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form-signin text-center" }) do |f| %>
+  <div class="mb-4">
+    <h2>ログイン</h2>
+  </div>
+
+  <div class="form-label-group mb-4">
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", id: "inputEmail", placeholder: "メールアドレス" %>
+    <%= f.label :email, for: "inputEmail", class: "sr-only"%>
+  </div>
+
+  <div class="form-label-group mb-4">
+    <%= f.password_field :password, autocomplete: "new-password", class: "form-control", id: "inputPassword", placeholder: "パスワード"  %>
+    <%= f.label :password, for: "inputPassword", class: "sr-only" %>
+  </div>
+
+  <% if devise_mapping.rememberable? %>
+    <div class="form-label-group mb-4 text-left ml-sm-1">
+      <%= f.check_box :remember_me %>
+      <%= f.label :remember_me %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit "Log in", class: "btn btn-lg btn-info btn-block" %>
+  </div>
+<% end %>
+
+<div class="text-center">
+  <%= render "devise/shared/links" %>
+<div>

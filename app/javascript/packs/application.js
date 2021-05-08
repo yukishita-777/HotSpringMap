@@ -12,6 +12,7 @@ import 'bootstrap';
 import "src/js/application.js";
 import "src/css/application.scss";
 import "src/css/index.scss";
+import "src/css/new.scss";
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference
