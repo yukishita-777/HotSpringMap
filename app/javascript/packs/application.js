@@ -11,7 +11,6 @@ require("channels")
 import 'bootstrap';
 import "src/js/application.js";
 
-
 import "src/css/application.scss";
 import "src/css/index.scss";
 import "src/css/new.scss";

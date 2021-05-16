@@ -14,7 +14,7 @@
     var geocoder = new google.maps.Geocoder();
     const search = document.getElementById("search")
     var tokyo = {lat: 35.681167, lng: 139.767052}
-    var cl = document.getElementById('cl')
+    var cl = document.getElementById('cl');
     var reset = document.getElementById('reset')
 
     map = new google.maps.Map(target, {
@@ -81,8 +81,6 @@
           alert("リストがございません。");
         }
     });
-
-
   }
 
   function searchOnsen(){
@@ -92,7 +90,7 @@
     var service = new google.maps.places.PlacesService(map);
     service.nearbySearch({
       location: {lat: lat, lng: lng},
-      radius: 800,
+      radius: 500,
       keyword: "銭湯",
       language: 'ja',
     },function(results, status) {
@@ -105,11 +103,17 @@
           geocoder.geocode({
             location: location
           }, function(results, status) {
-            var adds = results[0].formatted_address.replace("日本、", "");
+            try{
+              var adds = results[0].formatted_address.replace("日本、", "");
+            } catch(e) {
+              var adds = ""
+            } finally {
+              var adds = results[0].formatted_address.replace("日本、", "");
+            }
 
             const infowindow = new google.maps.InfoWindow({
                 content: '<div id="content_name">'+ name + '</div>' + 
-                          '<div>'+ adds + '</div>' +
+                          '<div id="content_address">'+ adds + '</div>' +
                           '<button id="keep" class="btn btn-primary btn-sm btn-block">キープ</button>'
             });
             const marker = new google.maps.Marker({
@@ -142,20 +146,77 @@
   function addElement() {
     if (count <= 4) {
       var content_name = document.getElementById('content_name').innerText
+      var content_address = document.getElementById('content_address').innerText
+
+      var address = document.createElement("label")
+      address.classList.add("invisible");
+      address.innerText = content_address;
+
       var br = document.createElement("br")
       br.setAttribute('id', 'br_list');
   
-      var element = document.createElement("label");
-      element.classList.add("btn");
+      var element = document.createElement("label")
+      element.classList.add("btn-block");
+      element.classList.add("mt-2");
       element.setAttribute('id', 'keep_list');
-      element.innerText = "・" + content_name;
+      element.innerText = content_name;
   
-      var parent = document.getElementById('parent');
+      var parent = document.getElementById('parent')
       parent.appendChild(element);
+      parent.appendChild(address);
       parent.appendChild(br);
       count += 1
+      
+
     } else {
       alert("最大５つまでです。")
+      content_name = ""
     }
+    var keep_list = document.getElementById('keep_list')
+    keep_list.setAttribute('id', 'keep_list' + count);
+    var new_keep_list = document.getElementById('keep_list' + count)
+
+    var move = document.createElement("button")
+    move.classList.add("badge");
+    move.classList.add("badge-danger");
+    move.classList.add("ml-2");
+    move.innerText = "移動";
+    move.setAttribute('id', 'move');
+    new_keep_list.appendChild(move);
+
+    var move_badges = document.querySelectorAll('#move');
+    for(var i = 0; i < move_badges.length; i++) {
+      move_badges[i].addEventListener('click', moving, false);
+    }
+    
+    content_name = ""
   }
+
+  function moving(e){
+    parentnode = e.target.parentNode
+    address = parentnode.nextElementSibling.textContent;
+
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({
+      address: address
+    }, function(results, status) {
+      if (status !== 'OK') {
+        alert('該当する場所がございません。')
+        return;
+      }
+      if (results[0]) {
+      map = new google.maps.Map(target, {
+          center: results[0].geometry.location,
+          zoom: 15
+        });
+      } else {
+        alert('該当する場所がございません。')
+        return;
+      }
+      searchOnsen();
+      dragMarker();
+    });
+  }
+
+  
 </script>

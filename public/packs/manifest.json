@@ -9,7 +9,17 @@
       "js.map": [
         "/packs/js/application-87763977d6b83dd54ea8.js.map"
       ]
+    },
+    "maps/application": {
+      "js": [
+        "/packs/js/maps/application-7671ab377ba676822e10.js"
+      ],
+      "js.map": [
+        "/packs/js/maps/application-7671ab377ba676822e10.js.map"
+      ]
     }
   },
+  "maps/application.js": "/packs/js/maps/application-7671ab377ba676822e10.js",
+  "maps/application.js.map": "/packs/js/maps/application-7671ab377ba676822e10.js.map",
   "media/images/onsen.png": "/packs/media/images/onsen-dd3edcf2e75f2ec0084c408eff23f99c.png"
 }
