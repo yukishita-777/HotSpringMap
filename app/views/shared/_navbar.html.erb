@@ -25,9 +25,11 @@
     <button id="cl" class="ml-sm-5 btn btn-outline-dark my-2 my-sm-0">現在地から探す</button>
     <% if user_signed_in? %>
       <%= link_to "ログアウト", destroy_user_session_path, class:"btn btn-outline-dark ml-3 my-2 my-sm-0" %>
+      <%= link_to "お気に入り登録", new_map_path, class:"btn btn-outline-dark ml-3 my-2 my-sm-0" %>
     <% else %>
       <%= link_to "ログイン", new_user_session_path, class:"btn btn-outline-dark ml-3 my-2 my-sm-0" %>
       <%= link_to "ユーザー登録", new_user_registration_path, class:"btn btn-outline-dark ml-3 my-2 my-sm-0" %>
+      <%= link_to "お気に入り登録", new_map_path, class:"btn btn-outline-dark ml-3 my-2 my-sm-0" %>
     <% end %>
   </div>
 </nav>

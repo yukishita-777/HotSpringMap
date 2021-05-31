@@ -34,7 +34,7 @@
         var place = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         map = new google.maps.Map(target, {
           center: place,
-          zoom: 17
+          zoom: 15
         });
         var marker = new google.maps.Marker({
           position: place,
@@ -90,7 +90,7 @@
     var service = new google.maps.places.PlacesService(map);
     service.nearbySearch({
       location: {lat: lat, lng: lng},
-      radius: 500,
+      radius: 1000,
       keyword: "銭湯",
       language: 'ja',
     },function(results, status) {
@@ -107,8 +107,6 @@
               var adds = results[0].formatted_address.replace("日本、", "");
             } catch(e) {
               var adds = ""
-            } finally {
-              var adds = results[0].formatted_address.replace("日本、", "");
             }
 
             const infowindow = new google.maps.InfoWindow({
@@ -195,10 +193,11 @@
   function moving(e){
     parentnode = e.target.parentNode
     address = parentnode.nextElementSibling.textContent;
+    name = parentnode.textContent.replace("移動", "");;
 
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({
-      address: address
+      address: name
     }, function(results, status) {
       if (status !== 'OK') {
         alert('該当する場所がございません。')
@@ -213,7 +212,23 @@
         alert('該当する場所がございません。')
         return;
       }
-      searchOnsen();
+      const infowindow = new google.maps.InfoWindow({
+        content: '<div>'+ name + '</div>' +
+                '<a>'+ address + '</a>'
+      });
+
+      var marker = new google.maps.Marker({
+        position: map.getCenter(),
+        map: map,
+        icon: {
+          url: "<%= asset_pack_path 'media/images/onsen.png' %>",
+          scaledSize: new google.maps.Size(40, 40)
+        },
+      });
+
+      marker.addListener("click", () => {
+        infowindow.open(map, marker);
+      });
       dragMarker();
     });
   }

@@ -2,7 +2,6 @@
 
 Rails.application.routes.draw do
   devise_for :users
-  get 'maps/index'
-  root to: 'maps#index'
-  resources :maps, only: [:index]
+  root 'maps#index'
+  resources :maps
 end

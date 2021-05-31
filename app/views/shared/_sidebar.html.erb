@@ -11,6 +11,10 @@
       </li>
     </ul>
   </div>
-  <div id="messages">
-  </div>
+  <%= render "shared/form" %>
+    <ul class="messages">
+      <% @maps.each do |map| %>
+        <li class="message"><%= map.name %></li>
+      <% end %>
+    </ul>
 </nav>

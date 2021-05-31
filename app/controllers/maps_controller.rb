@@ -2,25 +2,38 @@
 
 class MapsController < ApplicationController
   def index
-    @map = Map.all
+    @maps = Map.all
+    @map = Map.new
+  end
+
+  def new
+    @map = Map.new(map_params)
   end
 
   def create
     @map = Map.new(map_params)
-    if @map.save
-      redirect_to :action => "index"
-    else
-      redirect_to :action => "index"
+
+    respond_to do |format|
+      if @map.save
+        format.html { redirect_to :root }
+        format.js
+      else
+        format.html { render :new }
+        format.js { render :errors}
+      end
     end
   end
-  
+
+  def upadate
+    @map = Map.find(params[:id])
+  end
+
   def destroy
     @map = Map.find(params[:id])
-    @map.destroy
-    redirect_to action: :index
   end
 
   private
+
   def map_params
     params.require(:map).permit(:name, :address, :latitude, :longitude)
   end

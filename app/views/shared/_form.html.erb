@@ -1,0 +1,7 @@
+<div class="form-area">
+  <%= form_with(model: @map, class: 'js-form') do |f| %>
+    <%= f.text_field :name, placeholder: "名前" %>
+    <%= f.text_area :address, placeholder: "住所" %>
+    <%= f.submit "お気に入り登録" %>
+  <% end %>
+</div>

@@ -8,8 +8,13 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
+var jQuery = require('jquery')
+global.$ = global.jQuery = jQuery;
+window.$ = window.jQuery = jQuery;
+
 import 'bootstrap';
 import "src/js/application.js";
+import "src/js/ajax.js";
 
 import "src/css/application.scss";
 import "src/css/index.scss";
